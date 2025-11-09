@@ -119,6 +119,7 @@ class GestionPersonnelTest {
         double nouveauSalaire = gestion.calculSalaire(employeId);
 
         Employee emp = gestion.getEmployees().get(0);
+        assertThat(emp).isInstanceOf(ProjectManager.class);
         assertThat(emp.getType()).isEqualTo("CHEF DE PROJET");
         assertThat(nouveauSalaire).isNotEqualTo(ancienSalaire);
         assertThat(nouveauSalaire).isEqualTo(50000 * 1.5 * 1.1 + 5000);

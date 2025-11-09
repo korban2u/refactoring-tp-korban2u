@@ -171,6 +171,7 @@ class GestionPersonnelLimitCasesTest {
         gestion.avancementEmploye(employeId, "CHEF DE PROJET");
 
         Employee emp = gestion.getEmployees().get(0);
+        assertThat(emp).isInstanceOf(ProjectManager.class);
         assertThat(emp.getType()).isEqualTo("CHEF DE PROJET");
         double salaire = gestion.calculSalaire(employeId);
         assertThat(salaire).isEqualTo(20000 * 1.5 + 5000);

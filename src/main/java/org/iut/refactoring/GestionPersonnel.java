@@ -8,6 +8,7 @@ public class GestionPersonnel {
     private ArrayList<Employee> employees = new ArrayList<>();
     public HashMap<String, Double> salairesEmployes = new HashMap<>();
     public ArrayList<String> logs = new ArrayList<>();
+    private SalaryCalculator salaryCalculator = new SalaryCalculator();
 
     public void ajouteSalarie(String type, String nom, double salaireDeBase, int experience, String equipe) {
         EmployeeType employeeType = EmployeeType.fromString(type);
@@ -15,38 +16,11 @@ public class GestionPersonnel {
         Employee employee = new Employee(employeeType.getLabel(), nom, salaireDeBase, experience, equipe);
         employees.add(employee);
 
-        double salaireFinal = calculerSalaireInitial(employeeType, salaireDeBase, experience);
+        double salaireFinal = salaryCalculator.calculateInitialSalary(employeeType, salaireDeBase, experience);
 
         salairesEmployes.put(employee.getId(), salaireFinal);
 
         logs.add(LocalDateTime.now() + " - Ajout de l'employé: " + nom);
-    }
-
-    private double calculerSalaireInitial(EmployeeType type, double salaireDeBase, int experience) {
-        double salaireFinal = salaireDeBase;
-
-        switch (type) {
-            case DEVELOPPEUR:
-                salaireFinal = salaireDeBase * SalaryConstants.DEVELOPER_BASE_MULTIPLIER;
-                if (experience > SalaryConstants.DEVELOPER_EXPERIENCE_THRESHOLD_LEVEL_1) {
-                    salaireFinal = salaireFinal * SalaryConstants.DEVELOPER_EXPERIENCE_MULTIPLIER_LEVEL_1;
-                }
-                break;
-            case CHEF_DE_PROJET:
-                salaireFinal = salaireDeBase * SalaryConstants.PROJECT_MANAGER_BASE_MULTIPLIER;
-                if (experience > SalaryConstants.PROJECT_MANAGER_EXPERIENCE_THRESHOLD) {
-                    salaireFinal = salaireFinal * SalaryConstants.PROJECT_MANAGER_EXPERIENCE_MULTIPLIER;
-                }
-                break;
-            case STAGIAIRE:
-                salaireFinal = salaireDeBase * SalaryConstants.INTERN_BASE_MULTIPLIER;
-                break;
-            default:
-                salaireFinal = salaireDeBase;
-                break;
-        }
-
-        return salaireFinal;
     }
 
     private Employee findEmployeeById(String employeId) {
@@ -66,38 +40,7 @@ public class GestionPersonnel {
             return 0;
         }
 
-        EmployeeType type = emp.getEmployeeType();
-        double salaireDeBase = emp.getBaseSalary();
-        int experience = emp.getYearsOfExperience();
-
-        double salaireFinal = salaireDeBase;
-
-        switch (type) {
-            case DEVELOPPEUR:
-                salaireFinal = salaireDeBase * SalaryConstants.DEVELOPER_BASE_MULTIPLIER;
-                if (experience > SalaryConstants.DEVELOPER_EXPERIENCE_THRESHOLD_LEVEL_1) {
-                    salaireFinal = salaireFinal * SalaryConstants.DEVELOPER_EXPERIENCE_MULTIPLIER_LEVEL_1;
-                }
-                if (experience > SalaryConstants.DEVELOPER_EXPERIENCE_THRESHOLD_LEVEL_2) {
-                    salaireFinal = salaireFinal * SalaryConstants.DEVELOPER_EXPERIENCE_MULTIPLIER_LEVEL_2;
-                }
-                break;
-            case CHEF_DE_PROJET:
-                salaireFinal = salaireDeBase * SalaryConstants.PROJECT_MANAGER_BASE_MULTIPLIER;
-                if (experience > SalaryConstants.PROJECT_MANAGER_EXPERIENCE_THRESHOLD) {
-                    salaireFinal = salaireFinal * SalaryConstants.PROJECT_MANAGER_EXPERIENCE_MULTIPLIER;
-                }
-                salaireFinal = salaireFinal + SalaryConstants.PROJECT_MANAGER_FIXED_BONUS;
-                break;
-            case STAGIAIRE:
-                salaireFinal = salaireDeBase * SalaryConstants.INTERN_BASE_MULTIPLIER;
-                break;
-            default:
-                salaireFinal = salaireDeBase;
-                break;
-        }
-
-        return salaireFinal;
+        return salaryCalculator.calculateSalary(emp);
     }
 
     public void generationRapport(String typeRapport, String filtre) {
@@ -174,34 +117,7 @@ public class GestionPersonnel {
 
         if (emp == null) return 0;
 
-        EmployeeType type = emp.getEmployeeType();
-        int experience = emp.getYearsOfExperience();
-        double salaireDeBase = emp.getBaseSalary();
-
-        double bonus = 0;
-
-        switch (type) {
-            case DEVELOPPEUR:
-                bonus = salaireDeBase * SalaryConstants.DEVELOPER_ANNUAL_BONUS_RATE;
-                if (experience > SalaryConstants.DEVELOPER_EXPERIENCE_THRESHOLD_LEVEL_1) {
-                    bonus = bonus * SalaryConstants.DEVELOPER_ANNUAL_BONUS_EXPERIENCE_MULTIPLIER;
-                }
-                break;
-            case CHEF_DE_PROJET:
-                bonus = salaireDeBase * SalaryConstants.PROJECT_MANAGER_ANNUAL_BONUS_RATE;
-                if (experience > SalaryConstants.PROJECT_MANAGER_EXPERIENCE_THRESHOLD) {
-                    bonus = bonus * SalaryConstants.PROJECT_MANAGER_ANNUAL_BONUS_EXPERIENCE_MULTIPLIER;
-                }
-                break;
-            case STAGIAIRE:
-                bonus = 0;
-                break;
-            default:
-                bonus = 0;
-                break;
-        }
-
-        return bonus;
+        return salaryCalculator.calculateAnnualBonus(emp);
     }
 
     public List<Employee> getEmployees() {

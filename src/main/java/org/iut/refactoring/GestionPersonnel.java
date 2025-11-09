@@ -27,19 +27,19 @@ public class GestionPersonnel {
 
         switch (type) {
             case DEVELOPPEUR:
-                salaireFinal = salaireDeBase * 1.2;
-                if (experience > 5) {
-                    salaireFinal = salaireFinal * 1.15;
+                salaireFinal = salaireDeBase * SalaryConstants.DEVELOPER_BASE_MULTIPLIER;
+                if (experience > SalaryConstants.DEVELOPER_EXPERIENCE_THRESHOLD_LEVEL_1) {
+                    salaireFinal = salaireFinal * SalaryConstants.DEVELOPER_EXPERIENCE_MULTIPLIER_LEVEL_1;
                 }
                 break;
             case CHEF_DE_PROJET:
-                salaireFinal = salaireDeBase * 1.5;
-                if (experience > 3) {
-                    salaireFinal = salaireFinal * 1.1;
+                salaireFinal = salaireDeBase * SalaryConstants.PROJECT_MANAGER_BASE_MULTIPLIER;
+                if (experience > SalaryConstants.PROJECT_MANAGER_EXPERIENCE_THRESHOLD) {
+                    salaireFinal = salaireFinal * SalaryConstants.PROJECT_MANAGER_EXPERIENCE_MULTIPLIER;
                 }
                 break;
             case STAGIAIRE:
-                salaireFinal = salaireDeBase * 0.6;
+                salaireFinal = salaireDeBase * SalaryConstants.INTERN_BASE_MULTIPLIER;
                 break;
             default:
                 salaireFinal = salaireDeBase;
@@ -74,23 +74,23 @@ public class GestionPersonnel {
 
         switch (type) {
             case DEVELOPPEUR:
-                salaireFinal = salaireDeBase * 1.2;
-                if (experience > 5) {
-                    salaireFinal = salaireFinal * 1.15;
+                salaireFinal = salaireDeBase * SalaryConstants.DEVELOPER_BASE_MULTIPLIER;
+                if (experience > SalaryConstants.DEVELOPER_EXPERIENCE_THRESHOLD_LEVEL_1) {
+                    salaireFinal = salaireFinal * SalaryConstants.DEVELOPER_EXPERIENCE_MULTIPLIER_LEVEL_1;
                 }
-                if (experience > 10) {
-                    salaireFinal = salaireFinal * 1.05;
+                if (experience > SalaryConstants.DEVELOPER_EXPERIENCE_THRESHOLD_LEVEL_2) {
+                    salaireFinal = salaireFinal * SalaryConstants.DEVELOPER_EXPERIENCE_MULTIPLIER_LEVEL_2;
                 }
                 break;
             case CHEF_DE_PROJET:
-                salaireFinal = salaireDeBase * 1.5;
-                if (experience > 3) {
-                    salaireFinal = salaireFinal * 1.1;
+                salaireFinal = salaireDeBase * SalaryConstants.PROJECT_MANAGER_BASE_MULTIPLIER;
+                if (experience > SalaryConstants.PROJECT_MANAGER_EXPERIENCE_THRESHOLD) {
+                    salaireFinal = salaireFinal * SalaryConstants.PROJECT_MANAGER_EXPERIENCE_MULTIPLIER;
                 }
-                salaireFinal = salaireFinal + 5000;
+                salaireFinal = salaireFinal + SalaryConstants.PROJECT_MANAGER_FIXED_BONUS;
                 break;
             case STAGIAIRE:
-                salaireFinal = salaireDeBase * 0.6;
+                salaireFinal = salaireDeBase * SalaryConstants.INTERN_BASE_MULTIPLIER;
                 break;
             default:
                 salaireFinal = salaireDeBase;
@@ -182,15 +182,15 @@ public class GestionPersonnel {
 
         switch (type) {
             case DEVELOPPEUR:
-                bonus = salaireDeBase * 0.1;
-                if (experience > 5) {
-                    bonus = bonus * 1.5;
+                bonus = salaireDeBase * SalaryConstants.DEVELOPER_ANNUAL_BONUS_RATE;
+                if (experience > SalaryConstants.DEVELOPER_EXPERIENCE_THRESHOLD_LEVEL_1) {
+                    bonus = bonus * SalaryConstants.DEVELOPER_ANNUAL_BONUS_EXPERIENCE_MULTIPLIER;
                 }
                 break;
             case CHEF_DE_PROJET:
-                bonus = salaireDeBase * 0.2;
-                if (experience > 3) {
-                    bonus = bonus * 1.3;
+                bonus = salaireDeBase * SalaryConstants.PROJECT_MANAGER_ANNUAL_BONUS_RATE;
+                if (experience > SalaryConstants.PROJECT_MANAGER_EXPERIENCE_THRESHOLD) {
+                    bonus = bonus * SalaryConstants.PROJECT_MANAGER_ANNUAL_BONUS_EXPERIENCE_MULTIPLIER;
                 }
                 break;
             case STAGIAIRE:

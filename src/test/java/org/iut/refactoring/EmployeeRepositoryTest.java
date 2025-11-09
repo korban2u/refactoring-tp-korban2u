@@ -1,5 +1,8 @@
 package org.iut.refactoring;
 
+import org.iut.refactoring.model.Developer;
+import org.iut.refactoring.model.Employee;
+import org.iut.refactoring.model.ProjectManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +34,7 @@ class EmployeeRepositoryTest {
     void shouldThrowExceptionWhenAddingNullEmployee() {
         assertThatThrownBy(() -> repository.add(null))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Employee cannot be null");
+                .hasMessage("Un employé ne peux pas être null");
     }
 
     @Test

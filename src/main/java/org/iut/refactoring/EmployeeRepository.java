@@ -1,8 +1,11 @@
 package org.iut.refactoring;
 
+import org.iut.refactoring.model.Employee;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class EmployeeRepository {
 
@@ -43,7 +46,7 @@ public class EmployeeRepository {
     public List<Employee> findByDivision(String division) {
         return employees.stream()
                 .filter(emp -> emp.getDivision().equals(division))
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new)); // mutable car sinon jpeux pas la modif avec un ToList qui est imuable
     }
 
     /**

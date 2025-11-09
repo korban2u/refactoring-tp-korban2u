@@ -1,5 +1,10 @@
 package org.iut.refactoring;
 
+import org.iut.refactoring.factory.EmployeeFactory;
+import org.iut.refactoring.model.Developer;
+import org.iut.refactoring.model.Employee;
+import org.iut.refactoring.model.Intern;
+import org.iut.refactoring.model.ProjectManager;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;

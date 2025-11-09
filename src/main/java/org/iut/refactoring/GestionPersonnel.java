@@ -1,5 +1,7 @@
 package org.iut.refactoring;
 
+import org.iut.refactoring.factory.EmployeeFactory;
+import org.iut.refactoring.model.Employee;
 import org.iut.refactoring.reports.ReportService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

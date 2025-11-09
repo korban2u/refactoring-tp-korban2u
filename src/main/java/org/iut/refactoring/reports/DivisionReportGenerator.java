@@ -1,6 +1,6 @@
 package org.iut.refactoring.reports;
 
-import org.iut.refactoring.Employee;
+import org.iut.refactoring.model.Employee;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

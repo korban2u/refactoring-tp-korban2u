@@ -1,4 +1,6 @@
-package org.iut.refactoring;
+package org.iut.refactoring.model;
+
+import org.iut.refactoring.EmployeeType;
 
 import java.util.UUID;
 
@@ -19,7 +21,7 @@ public abstract class Employee {
         this.division = division;
     }
 
-    protected Employee(String id, String type, String name, double baseSalary, int yearsOfExperience, String division) {
+    public Employee(String id, String type, String name, double baseSalary, int yearsOfExperience, String division) {
         this.id = id;
         this.type = type;
         this.name = name;

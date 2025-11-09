@@ -1,4 +1,6 @@
-package org.iut.refactoring;
+package org.iut.refactoring.model;
+
+import org.iut.refactoring.SalaryConstants;
 
 public class Developer extends Employee {
 
@@ -6,7 +8,7 @@ public class Developer extends Employee {
         super("DEVELOPPEUR", name, baseSalary, yearsOfExperience, division);
     }
 
-    protected Developer(String id, String name, double baseSalary, int yearsOfExperience, String division) {
+    public Developer(String id, String name, double baseSalary, int yearsOfExperience, String division) {
         super(id, "DEVELOPPEUR", name, baseSalary, yearsOfExperience, division);
     }
 

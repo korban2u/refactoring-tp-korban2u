@@ -1,5 +1,7 @@
 package org.iut.refactoring;
 
+import org.iut.refactoring.model.Employee;
+import org.iut.refactoring.model.ProjectManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;

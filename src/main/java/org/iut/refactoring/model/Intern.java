@@ -1,4 +1,6 @@
-package org.iut.refactoring;
+package org.iut.refactoring.model;
+
+import org.iut.refactoring.SalaryConstants;
 
 public class Intern extends Employee {
 
@@ -6,7 +8,7 @@ public class Intern extends Employee {
         super("STAGIAIRE", name, baseSalary, yearsOfExperience, division);
     }
 
-    protected Intern(String id, String name, double baseSalary, int yearsOfExperience, String division) {
+    public Intern(String id, String name, double baseSalary, int yearsOfExperience, String division) {
         super(id, "STAGIAIRE", name, baseSalary, yearsOfExperience, division);
     }
 

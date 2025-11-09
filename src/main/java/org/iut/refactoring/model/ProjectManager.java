@@ -1,4 +1,6 @@
-package org.iut.refactoring;
+package org.iut.refactoring.model;
+
+import org.iut.refactoring.SalaryConstants;
 
 public class ProjectManager extends Employee {
 
@@ -6,7 +8,7 @@ public class ProjectManager extends Employee {
         super("CHEF DE PROJET", name, baseSalary, yearsOfExperience, division);
     }
 
-    protected ProjectManager(String id, String name, double baseSalary, int yearsOfExperience, String division) {
+    public ProjectManager(String id, String name, double baseSalary, int yearsOfExperience, String division) {
         super(id, "CHEF DE PROJET", name, baseSalary, yearsOfExperience, division);
     }
 

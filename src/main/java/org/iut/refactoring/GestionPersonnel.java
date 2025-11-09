@@ -1,11 +1,13 @@
 package org.iut.refactoring;
 
+import org.iut.refactoring.reports.ReportService;
 import java.util.*;
 import java.time.*;
 
 public class GestionPersonnel {
 
     private final EmployeeRepository employeeRepository = new EmployeeRepository();
+    private final ReportService reportService = new ReportService();
     public HashMap<String, Double> salairesEmployes = new HashMap<>();
     public ArrayList<String> logs = new ArrayList<>();
 
@@ -32,38 +34,8 @@ public class GestionPersonnel {
     }
 
     public void generationRapport(String typeRapport, String filtre) {
-        System.out.println("=== RAPPORT: " + typeRapport + " ===");
-
-        if (typeRapport.equals("SALAIRE")) {
-            List<Employee> employees = filtre == null || filtre.isEmpty()
-                    ? employeeRepository.findAll()
-                    : employeeRepository.findByDivision(filtre);
-
-            for (Employee emp : employees) {
-                String nom = emp.getName();
-                double salaire = calculSalaire(emp.getId());
-                System.out.println(nom + ": " + salaire + " €");
-            }
-        } else if (typeRapport.equals("EXPERIENCE")) {
-            List<Employee> employees = filtre == null || filtre.isEmpty()
-                    ? employeeRepository.findAll()
-                    : employeeRepository.findByDivision(filtre);
-
-            for (Employee emp : employees) {
-                String nom = emp.getName();
-                int exp = emp.getYearsOfExperience();
-                System.out.println(nom + ": " + exp + " années");
-            }
-        } else if (typeRapport.equals("DIVISION")) {
-            HashMap<String, Integer> compteurDivisions = new HashMap<>();
-            for (Employee emp : employeeRepository.findAll()) {
-                String div = emp.getDivision();
-                compteurDivisions.put(div, compteurDivisions.getOrDefault(div, 0) + 1);
-            }
-            for (Map.Entry<String, Integer> entry : compteurDivisions.entrySet()) {
-                System.out.println(entry.getKey() + ": " + entry.getValue() + " employés");
-            }
-        }
+        List<Employee> employees = employeeRepository.findAll();
+        reportService.generateReport(typeRapport, employees, filtre);
         logs.add(LocalDateTime.now() + " - Rapport généré: " + typeRapport);
     }
 

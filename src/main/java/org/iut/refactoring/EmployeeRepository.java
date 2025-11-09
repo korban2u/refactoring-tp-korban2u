@@ -10,7 +10,7 @@ public class EmployeeRepository {
 
     public void add(Employee employee) {
         if (employee == null) {
-            throw new IllegalArgumentException("Employee cannot be null");
+            throw new IllegalArgumentException("Un employer ne peux pas être null");
         }
         employees.add(employee);
     }

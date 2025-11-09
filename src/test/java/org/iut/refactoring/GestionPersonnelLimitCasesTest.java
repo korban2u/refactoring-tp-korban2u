@@ -29,7 +29,7 @@ class GestionPersonnelLimitCasesTest {
     @Test
     void shouldHandleZeroBaseSalary() {
         gestion.ajouteSalarie("DEVELOPPEUR", "Alice", 0, 5, "IT");
-        String employeId = (String) gestion.employes.get(0)[0];
+        String employeId = gestion.getEmployees().get(0).getId();
 
         double salaire = gestion.calculSalaire(employeId);
 
@@ -39,7 +39,7 @@ class GestionPersonnelLimitCasesTest {
     @Test
     void shouldHandleNegativeExperience() {
         gestion.ajouteSalarie("DEVELOPPEUR", "Bob", 50000, -1, "IT");
-        String employeId = (String) gestion.employes.get(0)[0];
+        String employeId = gestion.getEmployees().get(0).getId();
 
         double salaire = gestion.calculSalaire(employeId);
 
@@ -49,7 +49,7 @@ class GestionPersonnelLimitCasesTest {
     @Test
     void shouldHandleVeryHighExperience() {
         gestion.ajouteSalarie("DEVELOPPEUR", "Senior", 50000, 30, "IT");
-        String employeId = (String) gestion.employes.get(0)[0];
+        String employeId = gestion.getEmployees().get(0).getId();
 
         double salaire = gestion.calculSalaire(employeId);
 
@@ -59,7 +59,7 @@ class GestionPersonnelLimitCasesTest {
     @Test
     void shouldHandleDeveloperWithExactly5YearsExperience() {
         gestion.ajouteSalarie("DEVELOPPEUR", "Developer", 50000, 5, "IT");
-        String employeId = (String) gestion.employes.get(0)[0];
+        String employeId = gestion.getEmployees().get(0).getId();
 
         double salaire = gestion.calculSalaire(employeId);
 
@@ -69,7 +69,7 @@ class GestionPersonnelLimitCasesTest {
     @Test
     void shouldHandleDeveloperWithExactly10YearsExperience() {
         gestion.ajouteSalarie("DEVELOPPEUR", "Developer", 50000, 10, "IT");
-        String employeId = (String) gestion.employes.get(0)[0];
+        String employeId = gestion.getEmployees().get(0).getId();
 
         double salaire = gestion.calculSalaire(employeId);
 
@@ -79,7 +79,7 @@ class GestionPersonnelLimitCasesTest {
     @Test
     void shouldHandleProjectManagerWithExactly3YearsExperience() {
         gestion.ajouteSalarie("CHEF DE PROJET", "Manager", 60000, 3, "RH");
-        String employeId = (String) gestion.employes.get(0)[0];
+        String employeId = gestion.getEmployees().get(0).getId();
 
         double salaire = gestion.calculSalaire(employeId);
 
@@ -123,7 +123,7 @@ class GestionPersonnelLimitCasesTest {
     @Test
     void shouldHandlePromotionToSameType() {
         gestion.ajouteSalarie("DEVELOPPEUR", "Alice", 50000, 6, "IT");
-        String employeId = (String) gestion.employes.get(0)[0];
+        String employeId = gestion.getEmployees().get(0).getId();
         double ancienSalaire = gestion.calculSalaire(employeId);
 
         gestion.avancementEmploye(employeId, "DEVELOPPEUR");
@@ -135,12 +135,12 @@ class GestionPersonnelLimitCasesTest {
     @Test
     void shouldHandlePromotionToUnknownType() {
         gestion.ajouteSalarie("DEVELOPPEUR", "Alice", 50000, 6, "IT");
-        String employeId = (String) gestion.employes.get(0)[0];
+        String employeId = gestion.getEmployees().get(0).getId();
 
         gestion.avancementEmploye(employeId, "SUPER_HERO");
 
-        Object[] emp = gestion.employes.get(0);
-        assertThat(emp[1]).isEqualTo("SUPER_HERO");
+        Employee emp = gestion.getEmployees().get(0);
+        assertThat(emp.getType()).isEqualTo("SUPER_HERO");
         double salaire = gestion.calculSalaire(employeId);
         assertThat(salaire).isEqualTo(50000);
     }
@@ -157,7 +157,7 @@ class GestionPersonnelLimitCasesTest {
     void shouldGetEmployeesFromEmptyDivision() {
         gestion.ajouteSalarie("DEVELOPPEUR", "Alice", 50000, 6, "IT");
 
-        var result = gestion.getEmployesParDivision("MARKETING");
+        var result = gestion.getEmployeesByDivision("MARKETING");
 
         assertThat(result).isEmpty();
     }
@@ -165,13 +165,13 @@ class GestionPersonnelLimitCasesTest {
     @Test
     void shouldHandleMultiplePromotions() {
         gestion.ajouteSalarie("STAGIAIRE", "Alice", 20000, 0, "IT");
-        String employeId = (String) gestion.employes.get(0)[0];
+        String employeId = gestion.getEmployees().get(0).getId();
 
         gestion.avancementEmploye(employeId, "DEVELOPPEUR");
         gestion.avancementEmploye(employeId, "CHEF DE PROJET");
 
-        Object[] emp = gestion.employes.get(0);
-        assertThat(emp[1]).isEqualTo("CHEF DE PROJET");
+        Employee emp = gestion.getEmployees().get(0);
+        assertThat(emp.getType()).isEqualTo("CHEF DE PROJET");
         double salaire = gestion.calculSalaire(employeId);
         assertThat(salaire).isEqualTo(20000 * 1.5 + 5000);
     }
@@ -208,7 +208,7 @@ class GestionPersonnelLimitCasesTest {
     @Test
     void shouldCalculateBonusForProjectManagerWithExactly3Years() {
         gestion.ajouteSalarie("CHEF DE PROJET", "Manager", 60000, 3, "RH");
-        String employeId = (String) gestion.employes.get(0)[0];
+        String employeId = gestion.getEmployees().get(0).getId();
 
         double bonus = gestion.calculBonusAnnuel(employeId);
 
@@ -218,7 +218,7 @@ class GestionPersonnelLimitCasesTest {
     @Test
     void shouldCalculateBonusForDeveloperWithExactly5Years() {
         gestion.ajouteSalarie("DEVELOPPEUR", "Dev", 50000, 5, "IT");
-        String employeId = (String) gestion.employes.get(0)[0];
+        String employeId = gestion.getEmployees().get(0).getId();
 
         double bonus = gestion.calculBonusAnnuel(employeId);
 
@@ -228,7 +228,7 @@ class GestionPersonnelLimitCasesTest {
     @Test
     void shouldCalculateBonusForUnknownEmployeeType() {
         gestion.ajouteSalarie("CONSULTANT", "John", 50000, 5, "IT");
-        String employeId = (String) gestion.employes.get(0)[0];
+        String employeId = gestion.getEmployees().get(0).getId();
 
         double bonus = gestion.calculBonusAnnuel(employeId);
 
@@ -238,7 +238,7 @@ class GestionPersonnelLimitCasesTest {
     @Test
     void shouldHandleSalaryCalculationWithZeroExperience() {
         gestion.ajouteSalarie("DEVELOPPEUR", "Junior", 50000, 0, "IT");
-        String employeId = (String) gestion.employes.get(0)[0];
+        String employeId = gestion.getEmployees().get(0).getId();
 
         double salaire = gestion.calculSalaire(employeId);
 

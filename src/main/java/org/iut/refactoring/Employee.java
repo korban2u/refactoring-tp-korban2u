@@ -18,7 +18,7 @@ public class Employee {
         this.yearsOfExperience = yearsOfExperience;
         this.division = division;
     }
-    
+
     public Employee(String id, String type, String name, double baseSalary, int yearsOfExperience, String division) {
         this.id = id;
         this.type = type;

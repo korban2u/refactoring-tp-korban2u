@@ -24,7 +24,7 @@ class GestionPersonnelTest {
         double salaire = gestion.calculSalaire(employeId);
         assertThat(gestion.getEmployees()).hasSize(1);
         assertThat(salaire).isEqualTo(50000 * 1.2 * 1.15);
-        assertThat(gestion.salairesEmployes.get(employeId)).isEqualTo(50000 * 1.2 * 1.15);
+        assertThat(gestion.getSalairesEmployes().get(employeId)).isEqualTo(50000 * 1.2 * 1.15);
     }
 
     @Test
@@ -147,9 +147,9 @@ class GestionPersonnelTest {
         String employeId = gestion.getEmployees().get(0).getId();
         gestion.avancementEmploye(employeId, "CHEF DE PROJET");
 
-        assertThat(gestion.logs).hasSize(2);
-        assertThat(gestion.logs.get(0)).contains("Ajout de l'employé: Alice");
-        assertThat(gestion.logs.get(1)).contains("Employé promu: Alice");
+        assertThat(gestion.getLogs()).hasSize(2);
+        assertThat(gestion.getLogs().get(0)).contains("Ajout de l'employé: Alice");
+        assertThat(gestion.getLogs().get(1)).contains("Employé promu: Alice");
     }
 
     @Test
@@ -160,8 +160,8 @@ class GestionPersonnelTest {
         gestion.ajouteSalarie("DEVELOPPEUR", "Dan", 55000, 12, "IT");
 
         assertThat(gestion.getEmployees()).hasSize(4);
-        assertThat(gestion.salairesEmployes).hasSize(4);
-        assertThat(gestion.logs).hasSize(4);
+        assertThat(gestion.getSalairesEmployes()).hasSize(4);
+        assertThat(gestion.getLogs()).hasSize(4);
     }
 
     @Test

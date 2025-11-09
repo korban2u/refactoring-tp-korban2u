@@ -117,7 +117,7 @@ class GestionPersonnelLimitCasesTest {
 
         String output = outContent.toString();
         assertThat(output).contains("=== RAPPORT: INCONNU ===");
-        assertThat(gestion.logs).anyMatch(log -> log.contains("Rapport généré: INCONNU"));
+        assertThat(gestion.getLogs()).anyMatch(log -> log.contains("Rapport généré: INCONNU"));
     }
 
     @Test

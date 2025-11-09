@@ -98,7 +98,7 @@ class GestionPersonnelReportTest {
         
         gestion.generationRapport("SALAIRE", "IT");
 
-        assertThat(gestion.logs).hasSize(2);
-        assertThat(gestion.logs.get(1)).contains("Rapport généré: SALAIRE");
+        assertThat(gestion.getLogs()).hasSize(2);
+        assertThat(gestion.getLogs().get(1)).contains("Rapport généré: SALAIRE");
     }
 }

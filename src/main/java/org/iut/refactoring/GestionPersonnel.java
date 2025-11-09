@@ -5,24 +5,15 @@ import java.time.*;
 
 public class GestionPersonnel {
 
-    // TODO Ancien systeme de merde  (à tej plus apres)
-    public ArrayList<Object[]> employes = new ArrayList<>();
-
-    // Nouveau système
     private ArrayList<Employee> employees = new ArrayList<>();
-
     public HashMap<String, Double> salairesEmployes = new HashMap<>();
     public ArrayList<String> logs = new ArrayList<>();
 
     public void ajouteSalarie(String type, String nom, double salaireDeBase, int experience, String equipe) {
         EmployeeType employeeType = EmployeeType.fromString(type);
 
-        // Créer l'objet Employee (nouveau système)
         Employee employee = new Employee(employeeType.getLabel(), nom, salaireDeBase, experience, equipe);
         employees.add(employee);
-
-        // TODO SUPRIMER ancien système
-        employes.add(employee.toArray());
 
         double salaireFinal = calculerSalaireInitial(employeeType, salaireDeBase, experience);
 
@@ -58,7 +49,6 @@ public class GestionPersonnel {
         return salaireFinal;
     }
 
-    // Nouvelle méthode utilisant Employee
     private Employee findEmployeeById(String employeId) {
         for (Employee emp : employees) {
             if (emp.getId().equals(employeId)) {
@@ -155,14 +145,6 @@ public class GestionPersonnel {
 
         emp.setType(newType);
 
-        // Synchroniser avec l'ancien système
-        for (Object[] oldEmp : employes) {
-            if (oldEmp[0].equals(employeId)) {
-                oldEmp[1] = newType;
-                break;
-            }
-        }
-
         double nouveauSalaire = calculSalaire(employeId);
         salairesEmployes.put(employeId, nouveauSalaire);
 
@@ -170,17 +152,6 @@ public class GestionPersonnel {
         System.out.println("Employé promu avec succès!");
     }
 
-    public ArrayList<Object[]> getEmployesParDivision(String division) {
-        ArrayList<Object[]> resultat = new ArrayList<>();
-        for (Employee emp : employees) {
-            if (emp.getDivision().equals(division)) {
-                resultat.add(emp.toArray());
-            }
-        }
-        return resultat;
-    }
-
-    // Nouvelle méthode qui utilsie Employee
     public List<Employee> getEmployeesByDivision(String division) {
         List<Employee> result = new ArrayList<>();
         for (Employee emp : employees) {
@@ -233,8 +204,11 @@ public class GestionPersonnel {
         return bonus;
     }
 
-    // Méthode pour recup les employé
     public List<Employee> getEmployees() {
         return new ArrayList<>(employees);
+    }
+
+    public int getEmployeeCount() {
+        return employees.size();
     }
 }

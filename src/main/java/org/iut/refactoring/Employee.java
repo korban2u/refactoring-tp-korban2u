@@ -2,7 +2,7 @@ package org.iut.refactoring;
 
 import java.util.UUID;
 
-public class Employee {
+public abstract class Employee {
     private final String id;
     private String type;
     private final String name;
@@ -10,7 +10,7 @@ public class Employee {
     private final int yearsOfExperience;
     private final String division;
 
-    public Employee(String type, String name, double baseSalary, int yearsOfExperience, String division) {
+    protected Employee(String type, String name, double baseSalary, int yearsOfExperience, String division) {
         this.id = UUID.randomUUID().toString();
         this.type = type;
         this.name = name;
@@ -19,7 +19,7 @@ public class Employee {
         this.division = division;
     }
 
-    public Employee(String id, String type, String name, double baseSalary, int yearsOfExperience, String division) {
+    protected Employee(String id, String type, String name, double baseSalary, int yearsOfExperience, String division) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -27,6 +27,11 @@ public class Employee {
         this.yearsOfExperience = yearsOfExperience;
         this.division = division;
     }
+
+    // Méthodes abstraites à implémenter par les sous-classes
+    public abstract double calculateSalary();
+    public abstract double calculateInitialSalary();
+    public abstract double calculateAnnualBonus();
 
     public String getId() {
         return id;
@@ -58,23 +63,6 @@ public class Employee {
 
     public EmployeeType getEmployeeType() {
         return EmployeeType.fromString(type);
-    }
-
-    // TODO méthode pour convertir vers Object[] (c'est pour que ça marche je dois le tej apres )
-    public Object[] toArray() {
-        return new Object[]{id, type, name, baseSalary, yearsOfExperience, division};
-    }
-
-    // Méthode statique pour créer depuis Object[]
-    public static Employee fromArray(Object[] array) {
-        return new Employee(
-                (String) array[0],
-                (String) array[1],
-                (String) array[2],
-                (double) array[3],
-                (int) array[4],
-                (String) array[5]
-        );
     }
 
     @Override

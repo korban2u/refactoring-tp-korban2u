@@ -8,15 +8,12 @@ public class GestionPersonnel {
     private ArrayList<Employee> employees = new ArrayList<>();
     public HashMap<String, Double> salairesEmployes = new HashMap<>();
     public ArrayList<String> logs = new ArrayList<>();
-    private SalaryCalculator salaryCalculator = new SalaryCalculator();
 
     public void ajouteSalarie(String type, String nom, double salaireDeBase, int experience, String equipe) {
-        EmployeeType employeeType = EmployeeType.fromString(type);
-
-        Employee employee = new Employee(employeeType.getLabel(), nom, salaireDeBase, experience, equipe);
+        Employee employee = EmployeeFactory.createEmployee(type, nom, salaireDeBase, experience, equipe);
         employees.add(employee);
 
-        double salaireFinal = salaryCalculator.calculateInitialSalary(employeeType, salaireDeBase, experience);
+        double salaireFinal = employee.calculateInitialSalary();
 
         salairesEmployes.put(employee.getId(), salaireFinal);
 
@@ -40,7 +37,7 @@ public class GestionPersonnel {
             return 0;
         }
 
-        return salaryCalculator.calculateSalary(emp);
+        return emp.calculateSalary();
     }
 
     public void generationRapport(String typeRapport, String filtre) {
@@ -79,19 +76,32 @@ public class GestionPersonnel {
     }
 
     public void avancementEmploye(String employeId, String newType) {
-        Employee emp = findEmployeeById(employeId);
+        Employee oldEmployee = findEmployeeById(employeId);
 
-        if (emp == null) {
+        if (oldEmployee == null) {
             System.out.println("ERREUR: impossible de trouver l'employé");
             return;
         }
 
-        emp.setType(newType);
+        Employee newEmployee = EmployeeFactory.createEmployeeWithId(
+                employeId,
+                newType,
+                oldEmployee.getName(),
+                oldEmployee.getBaseSalary(),
+                oldEmployee.getYearsOfExperience(),
+                oldEmployee.getDivision()
+        );
 
-        double nouveauSalaire = calculSalaire(employeId);
+        // Remplacer l'ancien employé par le nouveau dans la liste
+        int index = employees.indexOf(oldEmployee);
+        if (index != -1) {
+            employees.set(index, newEmployee);
+        }
+
+        double nouveauSalaire = newEmployee.calculateSalary();
         salairesEmployes.put(employeId, nouveauSalaire);
 
-        logs.add(LocalDateTime.now() + " - Employé promu: " + emp.getName());
+        logs.add(LocalDateTime.now() + " - Employé promu: " + newEmployee.getName());
         System.out.println("Employé promu avec succès!");
     }
 
@@ -117,7 +127,7 @@ public class GestionPersonnel {
 
         if (emp == null) return 0;
 
-        return salaryCalculator.calculateAnnualBonus(emp);
+        return emp.calculateAnnualBonus();
     }
 
     public List<Employee> getEmployees() {

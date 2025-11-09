@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Repository pour la gestion de la persistance des employés.
- * Fournit les opérations CRUD de base.
- */
 public class EmployeeRepository {
 
     private final List<Employee> employees = new ArrayList<>();
@@ -19,7 +15,7 @@ public class EmployeeRepository {
      */
     public void add(Employee employee) {
         if (employee == null) {
-            throw new IllegalArgumentException("Employee cannot be null");
+            throw new IllegalArgumentException("Un employé ne peux pas être null");
         }
         employees.add(employee);
     }
@@ -34,12 +30,9 @@ public class EmployeeRepository {
             return Optional.empty();
         }
 
-        for (Employee emp : employees) {
-            if (emp.getId().equals(employeeId)) {
-                return Optional.of(emp);
-            }
-        }
-        return Optional.empty();
+        return employees.stream()
+                .filter(emp -> emp.getId().equals(employeeId))
+                .findFirst();
     }
 
     /**
@@ -48,13 +41,9 @@ public class EmployeeRepository {
      * @return liste des employés de cette division
      */
     public List<Employee> findByDivision(String division) {
-        List<Employee> result = new ArrayList<>();
-        for (Employee emp : employees) {
-            if (emp.getDivision().equals(division)) {
-                result.add(emp);
-            }
-        }
-        return result;
+        return employees.stream()
+                .filter(emp -> emp.getDivision().equals(division))
+                .toList();
     }
 
     /**

@@ -1,6 +1,5 @@
-package org.iut.refactoring;
+package org.iut.refactoring.factory;
 
-import org.iut.refactoring.factory.EmployeeFactory;
 import org.iut.refactoring.model.Developer;
 import org.iut.refactoring.model.Employee;
 import org.iut.refactoring.model.Intern;

@@ -1,6 +1,6 @@
-package org.iut.refactoring;
+package org.iut.refactoring.model;
 
-import org.iut.refactoring.model.Intern;
+import org.iut.refactoring.EmployeeType;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;

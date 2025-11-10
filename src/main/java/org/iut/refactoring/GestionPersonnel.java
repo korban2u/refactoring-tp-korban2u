@@ -48,7 +48,7 @@ public class GestionPersonnel {
     public double calculSalaire(String employeId) {
         Optional<Employee> empOpt = employeeRepository.findById(employeId);
 
-        if (!empOpt.isPresent()) {
+        if (empOpt.isEmpty()) {
             System.out.println("ERREUR: impossible de trouver l'employé");
             return 0;
         }
@@ -71,7 +71,7 @@ public class GestionPersonnel {
     public void avancementEmploye(String employeId, String newType) {
         Optional<Employee> oldEmployeeOpt = employeeRepository.findById(employeId);
 
-        if (!oldEmployeeOpt.isPresent()) {
+        if (oldEmployeeOpt.isEmpty()) {
             System.out.println("ERREUR: impossible de trouver l'employé");
             return;
         }
@@ -120,11 +120,8 @@ public class GestionPersonnel {
     public double calculBonusAnnuel(String employeId) {
         Optional<Employee> empOpt = employeeRepository.findById(employeId);
 
-        if (!empOpt.isPresent()) {
-            return 0;
-        }
+        return empOpt.map(Employee::calculateAnnualBonus).orElse(0.0);
 
-        return empOpt.get().calculateAnnualBonus();
     }
 
     /**
